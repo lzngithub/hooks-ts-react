@@ -1,46 +1,40 @@
-# Getting Started with Create React App
+# react hook ts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 创建项目
 
-## Available Scripts
+```shell
+npx create-react-app hook-ts-demo --template typescript
+```
 
-In the project directory, you can run:
+## 选择样式语言
 
-### `npm start`
+[css-in-js(emotionjs)](https://emotion.sh/docs/introduction)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```shell
+npm i @emotion/css
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 选择ui组件库
 
-### `npm test`
+选择：antd 4.18.3
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+参考：[https://ant.design/docs/react/use-in-typescript-cn](https://ant.design/docs/react/use-in-typescript-cn)
 
-### `npm run build`
+注意：
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* 定制主题的时候，@craco/craco和react-script 版本可能对不上，根据安装@craco/craco的报错信息去调整版本，如果不想调整版本，可以调换依赖安装的先后顺序，可以解决问题
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 配置接口配置
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+选择fetch
 
-### `npm run eject`
+用大的工具库： qs
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+安装qs的时候要同时安装@types/qs的
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```shell
+npm i --save-dev @types/qs
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### qs
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
