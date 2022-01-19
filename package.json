@@ -25,6 +25,10 @@
   },
   "scripts": {
     "start": "craco start",
+    "start:pro": "dotenv -e .env.production craco start",
+    "start:pre": "dotenv -e .env.test craco start",
+    "build:dev": "dotenv -e .env.development craco build",
+    "build:pre": "dotenv -e .env.test craco build",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
