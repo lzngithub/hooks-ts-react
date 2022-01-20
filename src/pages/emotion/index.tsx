@@ -4,6 +4,7 @@ import React from 'react'
 import { css, cx } from '@emotion/css'
 import styled from '@emotion/styled'
 import { Button } from 'antd';
+import { useAuth } from 'context/auth-context';
 
 const fontColor = 'red'
 
@@ -12,7 +13,9 @@ type UserInfo = {
 	age: number
 }
 
-export const User: React.FC<UserInfo> = (props) => {
+export const Emotion: React.FC<UserInfo> = (props) => {
+    const context = useAuth()
+    console.log(context)
     return <div>
         <UserMessage color='green'>
             <p className={cx(user, false && userBlue)}>{ props.name }</p>

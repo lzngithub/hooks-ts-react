@@ -49,6 +49,15 @@ npm install -g dotenv-cli
 "build": "craco build",
 ```
 
+## 构建全局的useContext
+
+必备知识，参考[官方文档](https://react.docschina.org/docs/hooks-reference.html#usecontext)
+
+1. 创建一个context对象initContext
+2. 通过useReducer钩子创建全局变量
+3. 通过<initContext.Provider> 把全局变量和dispatch传递给下层组件
+4. 下层组件通过useContext获取传递下来的值和方法
+
 ## 配置接口配置
 
 选择fetch
@@ -60,6 +69,3 @@ npm install -g dotenv-cli
 ```shell
 npm i --save-dev @types/qs
 ```
-
-### qs
-

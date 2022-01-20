@@ -1,10 +1,11 @@
 import qs from 'qs'
-// import * as auth from 'auth-provider'
-// import { useAuth } from 'context/auth-context'
-// import { useCallback } from 'react'
+import { useCallback } from 'react'
+import * as auth from 'auth-provider'
+import { useAuth } from 'context/auth-context'
 
 const apiUrl = process.env.REACT_APP_API_URL
 
+// ? 表示可有可无的意思
 interface Config extends RequestInit {
 	data?: object
 	token?: string
@@ -37,7 +38,7 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
 			if (response.ok) { // 状态码在200-299范围内为true
 				if (res.code === 110000) {
 					// token校验失败
-					// await auth.tokenFailLogout()
+					await auth.tokenFailLogout()
 					window.location.reload()
 					return Promise.reject({ message: '请重新登录' })
 				}
@@ -56,15 +57,16 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
         })
 }
 
-// export const useHttp = () => {
-// 	const { user } = useAuth()
-// 	return useCallback(
-// 		(...[endpoint, config]: Parameters<typeof http>) => http(endpoint, { ...config, token: user?.token || '' }),
-// 		[user?.token]
-// 	)
-// }
+// 判断有没有token，有就带上
+export const useHttp = () => {
+	const { user } = useAuth()
+	return useCallback(
+		(...[endpoint, config]: Parameters<typeof http>) => http(endpoint, { ...config, token: user?.token || '' }),
+		[user?.token]
+	)
+}
 
-// export const tokenHttp = <T = any>(...[endpoint, config]: Parameters<typeof http>) => {
-// 	const token = window.localStorage.getItem('__auth_provider_token__') || ''
-// 	return http(endpoint, { ...config, token }) as Promise<T>
-// }
+export const tokenHttp = <T = any>(...[endpoint, config]: Parameters<typeof http>) => {
+	const token = window.localStorage.getItem('__auth_provider_token__') || ''
+	return http(endpoint, { ...config, token }) as Promise<T>
+}
