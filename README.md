@@ -69,3 +69,15 @@ npm install -g dotenv-cli
 ```shell
 npm i --save-dev @types/qs
 ```
+
+## 配置路由
+
+> react-router和react-router-dom的区别
+
+react-router实现了路由的核心功能，react-router-dom基于react-router，加入了在浏览器运行环境下的一些功能
+
+安装路由
+
+```shell
+npm install react-router-dom react-router --save
+```
