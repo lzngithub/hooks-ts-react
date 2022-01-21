@@ -23,7 +23,9 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
 	// 2.处理数据，区分 get 方法和其他方法
 	if (config.method.toUpperCase() === 'GET') {
 		// 形式由 { c: 'b', a: 'd' } 变为 'c=b&a=d'
-		endpoint += `?${qs.stringify(data)}`
+		if (qs.stringify(data) !== '') {
+			endpoint += `?${qs.stringify(data)}`
+		}
 	} else {
 		// 转变为JSON字符串
 		config.body = JSON.stringify(data || {})

@@ -18,6 +18,7 @@ const defaultInitConfig = {
   throwOnError: false,
 };
 
+// 重新包装一层dispathc，使得dispatch更安全
 const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
   const mountedRef = useMountedRef();
   return useCallback(
