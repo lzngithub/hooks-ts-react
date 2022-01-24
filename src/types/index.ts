@@ -1,9 +1,17 @@
 export type Raw = string | number;
 
-export interface User {
+export interface Token {
   type: string;
   token: string;
   expiredAt: number;
+}
+
+export interface UserInfo {
+  id: number,
+	username: string
+	userType: number
+	gender: 1 | 2
+	mobile: string
 }
 
 export type KeyValue = { [key: string]: string };

@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/qs": "^6.9.7"
+    "@types/qs": "^6.9.7",
+    "tslint": "^6.1.3"
   }
 }

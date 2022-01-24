@@ -1,13 +1,14 @@
+import { useAuth } from "context/auth-context";
+import { AuthPages } from 'pages/auth-pages'
+import { UnAuthPages } from 'pages/unauth-pages' // 测试api的写法
 import './App.css'
-import { Emotion } from 'pages/emotion'
-import { TestApi } from 'pages/testApi' // 测试api的写法
 
 function App() {
+	const { user } = useAuth()
 	return (
 		<div className='App'>
 			<header className='App-header'>
-				<Emotion name='liang' age={666}></Emotion>
-        <TestApi></TestApi>
+				{ user?.token ? <AuthPages /> : <UnAuthPages /> }
 			</header>
 		</div>
 	)

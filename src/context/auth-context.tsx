@@ -1,21 +1,15 @@
 // 控制用户信息和权限全局变量，通过useContext和useState配合
 import React, { ReactNode, useCallback } from 'react'
 import * as auth from 'auth-provider'
-import { User } from 'types'
+import { Token, UserInfo } from 'types'
 import { useState } from 'react'
 import { useMount } from 'hooks'
 
-// 定义接口
-interface UserInfo {
-	avatar: string
-	username: string
-	userType: string
-	gender: 1 | 2
-	mobile: string
-}
-
 type InitContext = {
-	user: Partial<User & UserInfo> | null
+	user: Partial<Token & UserInfo> | null
+	setUser: () => void,
+	login: (userMessage: { usename: string; password: string }) => Promise<Token>;
+	getUserInfo: () => any
 }
 
 const AuthContext = React.createContext<InitContext | undefined>(undefined)
@@ -23,13 +17,20 @@ AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const { user, setUser } = useLogin()
-	const [userData, setUserData] = useState<Partial<User & UserInfo> | null>(user)
+	const [userData, setUserData] = useState<Partial<Token & UserInfo> | null>(user)
+
+	const getUserInfo = useCallback(() => {
+		const useInfo = auth.getUserInfo()
+	}, [])
 
 	return (
 		<AuthContext.Provider
 			children={children}
 			value={{
-				user: userData
+				user: userData,
+				setUser,
+				login: auth.accessToken,
+				getUserInfo
 			}}
 		/>
 	)
