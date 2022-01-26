@@ -1,16 +1,9 @@
 import { Button } from 'antd'
 import { useNavigate } from 'react-router'
-import { useLogin } from 'server/login'
+import { useAuth } from 'context/auth-context'
 export const Login = () => {
 	const navigate = useNavigate()
-	const { startRun, data: token } = useLogin()
-	const login = () => {
-		console.log('login')
-		startRun({
-			username: 'lijianhua',
-			password: 'love'
-		})
-	}
+	const { login } = useAuth()
 	return (
 		<div>
 			登录页

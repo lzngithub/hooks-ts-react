@@ -54,17 +54,17 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
 			}
 		})
 		.catch((err) => {
-            console.log('网络故障或服务端的 CORS 配置错误')
-            return Promise.reject(err)
-        })
+			console.log('网络故障或服务端的 CORS 配置错误')
+			return Promise.reject(err)
+		})
 }
 
 // 判断有没有token，有就带上
 export const useHttp = () => {
-	const { user } = useAuth()
+	const { token } = useAuth()
 	return useCallback(
-		(...[endpoint, config]: Parameters<typeof http>) => http(endpoint, { ...config, token: user?.token || '' }),
-		[user?.token]
+		(...[endpoint, config]: Parameters<typeof http>) => http(endpoint, { ...config, token: token || '' }),
+		[token]
 	)
 }
 

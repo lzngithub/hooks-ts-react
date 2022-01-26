@@ -20,7 +20,7 @@ export const getTokenObj = () => window.localStorage.getItem(tokenObjKey)
 export const handleUserResponse = ({ data }: { data: Token }) => {
 	window.localStorage.setItem(localStorageKey, data.token || '')
 	window.localStorage.setItem(tokenObjKey, data.token ? JSON.stringify(data) : '')
-	return data
+	return Promise.resolve(data)
 }
 
 // 获取用户信息
@@ -64,6 +64,8 @@ export const accessToken = (userMessage: { usename: string; password: string }) 
 	})
 }
 
+
+
 export const logout = async () => {
 	try {
 	} catch (error) {
@@ -78,3 +80,6 @@ export const tokenFailLogout = () => {
 	window.localStorage.removeItem(localStorageKey)
 	window.localStorage.removeItem(tokenObjKey)
 }
+
+
+

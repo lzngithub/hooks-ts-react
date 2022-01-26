@@ -1,36 +1,43 @@
 // 控制用户信息和权限全局变量，通过useContext和useState配合
-import React, { ReactNode, useCallback } from 'react'
+import React, { ReactNode, useCallback, useEffect } from 'react'
 import * as auth from 'auth-provider'
-import { Token, UserInfo } from 'types'
+import { UserInfo } from 'types'
 import { useState } from 'react'
-import { useMount } from 'hooks'
 
 type InitContext = {
-	user: Partial<Token & UserInfo> | null
-	setUser: () => void,
-	login: (userMessage: { usename: string; password: string }) => Promise<Token>;
-	getUserInfo: () => any
+	userInfo: Partial<UserInfo> | null
+	token:  string | null
+	login: () => void;
 }
 
 const AuthContext = React.createContext<InitContext | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const { user, setUser } = useLogin()
-	const [userData, setUserData] = useState<Partial<Token & UserInfo> | null>(user)
+	const [userInfo, setUserInfo] = useState <Partial<UserInfo> | null>(null)
+	const [token, setToken] = useState<string | null>('')
 
-	const getUserInfo = useCallback(() => {
-		const useInfo = auth.getUserInfo()
+	// 刷新的时候从localstorage拿token值
+	useEffect(() => {
+		setToken(auth.getToken)
+	}, [])
+
+	const login = useCallback(() => {
+		auth.accessToken({ usename: 'li', password: 'love' }).then(res => {
+			setToken(res.token)
+			auth.getUserInfo().then(message => {
+				setUserInfo(message)
+			})
+		})
 	}, [])
 
 	return (
 		<AuthContext.Provider
 			children={children}
 			value={{
-				user: userData,
-				setUser,
-				login: auth.accessToken,
-				getUserInfo
+				token,
+				userInfo,
+				login
 			}}
 		/>
 	)
@@ -43,32 +50,4 @@ export const useAuth = () => {
 		throw new Error('useAuth必须在AuthProvider中使用')
 	}
 	return context
-}
-
-const useLogin = () => {
-	const [isLogin, setIsLogin] = useState(false)
-	const [user, _setUser] = useState<User | null>(null)
-
-	const setUser = useCallback(() => {
-		const tokenObjStr = auth.getTokenObj() || '{}'
-		const { token, expiredAt, type } = JSON.parse(tokenObjStr) as User
-		if (token && expiredAt && Number(expiredAt) * 1000 > Date.now()) {
-			_setUser({ token, expiredAt, type })
-			setIsLogin(true)
-		} else {
-			_setUser(null)
-			setIsLogin(false)
-		}
-	}, [])
-
-	useMount(() => {
-		setUser()
-	})
-
-	return {
-		isLogin,
-		setIsLogin,
-		user,
-		setUser
-	}
 }
